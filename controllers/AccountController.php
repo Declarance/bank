@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\controllers;
 
 use app\models\Account;
@@ -8,17 +10,16 @@ use app\models\forms\AccountReplenishForm;
 use app\models\forms\AccountWithdrawForm;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 class AccountController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex(): string
     {
-        $accounts = Account::find()->all();
-
-        return $this->render('index', ['accounts' => $accounts]);
+        return $this->render('index', ['accounts' => Account::find()->all()]);
     }
 
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new AccountForm();
 
@@ -33,7 +34,7 @@ class AccountController extends Controller
         }
     }
 
-    public function actionUpdate(int $id)
+    public function actionUpdate(int $id): Response|string
     {
         $model = new AccountForm();
 
@@ -48,7 +49,7 @@ class AccountController extends Controller
         }
     }
 
-    public function actionDelete(int $id)
+    public function actionDelete(int $id): Response
     {
         $model = Account::findOne($id);
         $model->delete();
@@ -56,13 +57,13 @@ class AccountController extends Controller
         return $this->redirect(['account/index']);
     }
 
-    public function actionReplenish(int $id)
+    public function actionReplenish(int $id): Response|string
     {
         $model = new AccountReplenishForm();
         $account = Account::findOne($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $account->replenish($model->currencyId, $model->value);
+            $account->replenish((int)$model->currencyId, (float)$model->value);
 
             return $this->redirect(['account/index']);
         } else {
@@ -70,13 +71,13 @@ class AccountController extends Controller
         }
     }
 
-    public function actionWithdraw(int $id)
+    public function actionWithdraw(int $id): Response|string
     {
         $model = new AccountWithdrawForm();
         $account = Account::findOne($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $account->withdraw($model->currencyId, $model->value);
+            $account->withdraw((int)$model->currencyId, (float)$model->value);
 
             return $this->redirect(['account/index']);
         } else {

@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\models\forms;
 
 use app\models\Wallet;
 use yii\base\Model;
 
+/**
+ * @property int $currencyId
+ * @property float $value
+ */
 class AccountWithdrawForm extends Model
 {
     public $currencyId;
     public $value;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['currencyId', 'value'], 'required'],
@@ -19,7 +25,7 @@ class AccountWithdrawForm extends Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'currencyId' => 'Валюта',

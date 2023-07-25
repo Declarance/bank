@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\controllers;
 
 use app\models\forms\WalletForm;
@@ -7,10 +9,11 @@ use app\models\Wallet;
 use app\models\Account;
 use yii\web\Controller;
 use Yii;
+use yii\web\Response;
 
 class WalletController extends Controller
 {
-    public function actionCreate(int $accountId)
+    public function actionCreate(int $accountId): Response|string
     {
         $model = new WalletForm();
 
@@ -26,7 +29,7 @@ class WalletController extends Controller
         }
     }
 
-    public function actionDelete(int $id)
+    public function actionDelete(int $id): Response
     {
         $model = Wallet::findOne($id);
         $model->delete();

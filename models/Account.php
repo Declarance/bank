@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\models;
 
 use yii\db\ActiveQuery;
@@ -26,6 +28,9 @@ class Account extends ActiveRecord
         return $this->hasOne(Currency::class, ['id' => 'defaultCurrencyId']);
     }
 
+    /**
+     * Получить баланс в валюте указанной по умолчанию
+     */
     public function getBalance(): float
     {
         $balance = 0;
@@ -37,15 +42,32 @@ class Account extends ActiveRecord
         return round($balance / ($this->defaultCurrency)->exchangeWeight, 2);
     }
 
-    public function getWalletByCurrencyId(int $currencyId)
+    /**
+     * Получить кошелек с указанной валютой
+     */
+    public function getWalletByCurrencyId(int $currencyId): array|null|ActiveRecord
     {
         return Wallet::find()->where(['accountId' => $this->id])->andWhere(['currencyId' => $currencyId])->one();
     }
 
-    public function replenish(int $currencyId, float $value)
+    /**
+     * Пополнение счета
+     */
+    public function replenish(int $currencyId, float $value): void
     {
+        /** @var Wallet $wallet */
         $wallet = $this->getWalletByCurrencyId($currencyId);
         $wallet->replenish($value);
+    }
+
+    /**
+     * Снятие денег со счета
+     */
+    public function withdraw(int $currencyId, float $value): void
+    {
+        /** @var Wallet $wallet */
+        $wallet = $this->getWalletByCurrencyId($currencyId);
+        $wallet->withdraw($value);
     }
 
     /**
@@ -80,10 +102,5 @@ class Account extends ActiveRecord
         return $currencies;
     }
 
-    public function withdraw(int $currencyId, float $value)
-    {
-        /** @var Wallet $wallet */
-        $wallet = $this->getWalletByCurrencyId($currencyId);
-        $wallet->withdraw($value);
-    }
+
 }

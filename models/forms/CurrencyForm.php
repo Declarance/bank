@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\models\forms;
 
 use yii\base\Model;
 
+/**
+ * @property string $name
+ */
 class CurrencyForm extends Model
 {
     public $name;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['name', 'required'],
@@ -16,7 +21,7 @@ class CurrencyForm extends Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'name' => 'Наименование',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\controllers;
 
 use app\models\Currency;
@@ -7,17 +9,16 @@ use app\models\forms\CurrencyForm;
 use app\models\forms\CurrencyRateForm;
 use yii\web\Controller;
 use Yii;
+use yii\web\Response;
 
 class CurrencyController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex(): string
     {
-        $currencies = Currency::find()->all();
-
-        return $this->render('index', ['currencies' => $currencies]);
+        return $this->render('index', ['currencies' => Currency::find()->all()]);
     }
 
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new CurrencyForm();
 
@@ -32,7 +33,7 @@ class CurrencyController extends Controller
         }
     }
 
-    public function actionDelete(int $id)
+    public function actionDelete(int $id): Response
     {
         $model = Currency::findOne($id);
         $model->delete();
@@ -40,7 +41,7 @@ class CurrencyController extends Controller
         return $this->redirect(['currency/index']);
     }
 
-    public function actionRate(int $id)
+    public function actionRate(int $id): Response|string
     {
         $model = new CurrencyRateForm();
         $currency = Currency::findOne($id);

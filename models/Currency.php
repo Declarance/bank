@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\models;
 
 use yii\db\ActiveRecord;
@@ -17,7 +19,12 @@ class Currency extends ActiveRecord
         return '{{currencies}}';
     }
 
-    public function getOtherCurrencies()
+    /**
+     * Получить остальные валюты помимо текущей
+     *
+     * @return array|ActiveRecord[]
+     */
+    public function getOtherCurrencies(): array
     {
         return Currency::find()->where(['not in', 'id', $this->id])->all();
     }

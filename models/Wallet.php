@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\models;
 
 use yii\db\ActiveQuery;
@@ -30,13 +32,19 @@ class Wallet extends ActiveRecord
         return $this->hasOne(Currency::class, ['id' => 'currencyId']);
     }
 
-    public function replenish(float $value)
+    /**
+     * Пополнить кошелек
+     */
+    public function replenish(float $value): void
     {
         $this->value += $value;
         $this->save();
     }
 
-    public function withdraw(float $value)
+    /**
+     * Списать с кошелька
+     */
+    public function withdraw(float $value): void
     {
         if ($value > $this->value) {
             $this->value = 0;

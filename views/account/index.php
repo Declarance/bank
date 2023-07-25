@@ -24,29 +24,26 @@ $counter = 1;
     <div class="card mt-3 w-75">
         <div class="card-header">
             <div class="container">
-                <div class="row justify-content-end">
+                <div class="row justify-content-end align-items-center">
                     <div class="col">
-                        <h3>Счёт №<?= $counter++ ?></h3>
+                        <h3>Счёт #<?= $counter++ ?></h3>
                     </div>
 
-                    <div class="col">
-                        <div class="btn-group">
-                            <?= Html::a('Пополнить', ['account/replenish', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-success']) ?>
-                            <?= Html::a('Списать', ['account/withdraw', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-primary']) ?>
-                            <?= Html::a('Изменить', ['account/update', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-secondary']) ?>
-                            <?= Html::a('Удалить', ['account/delete', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-danger']) ?>
-                        </div>
+                    <div class="col btn-group">
+                        <?= Html::a('Пополнить', ['account/replenish', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-success']) ?>
+                        <?= Html::a('Списать', ['account/withdraw', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-primary']) ?>
+                        <?= Html::a('Изменить', ['account/update', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-secondary']) ?>
+                        <?= Html::a('Удалить', ['account/delete', 'id' => $account->id], ['class' => 'btn btn-sm btn-outline-danger']) ?>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="card-body">
-            <p>id: <?= Html::encode($account->id) ?></p>
             <p>Валюта по умолчанию: <?= Html::encode(($account->defaultCurrency)->name) ?></p>
             <p>Баланс: <strong><?= Html::encode($account->balance) ?></strong> <?= Html::encode(($account->defaultCurrency)->name) ?></p>
 
-            <div class="row">
+            <div class="row justify-content-start align-items-center">
                 <div class="col-3">
                     <?= Html::a('+ Создать кошелек', ['wallet/create', 'accountId' => $account->id], ['class' => 'btn btn-lg btn-primary']) ?>
                 </div>
@@ -55,20 +52,16 @@ $counter = 1;
                     <div class="col-3">
                         <div class="card">
                             <div class="card-header">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <?= Html::encode($wallet->value) ?>
+                                <div class="row justify-content-end align-items-center">
+                                    <div class="col-8">
+                                        <strong><?= Html::encode($wallet->value) ?></strong>
                                         <?= Html::encode(($wallet->currency)->name) ?>
                                     </div>
 
-                                    <div class="col-2">
-                                        <?= Html::a('X', ['wallet/delete', 'id' => $wallet->id], ['class' => 'text-danger']) ?>
+                                    <div class="col">
+                                        <?= Html::a('❌', ['wallet/delete', 'id' => $wallet->id], ['class' => 'btn btn-sm btn-outline-danger']) ?>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card-body">
-
                             </div>
                         </div>
                     </div>
