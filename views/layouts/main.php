@@ -48,7 +48,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Account', 'url' => ['/account/index']],
+            ['label' => 'Счета', 'url' => ['/account/index']],
+            ['label' => 'Валюта', 'url' => ['/currency/index']],
         ],
     ]);
 
@@ -62,6 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif ?>
+
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
