@@ -22,7 +22,7 @@ class WalletController extends Controller
 
             return $this->redirect(['account/index']);
         } else {
-            return $this->render('create', ['model' => $model]);
+            return $this->render('create', ['model' => $model, 'account' => Account::findOne($accountId)]);
         }
     }
 
